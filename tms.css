@@ -1,0 +1,349 @@
+:root {
+	--mid-blue: #409DA5;
+	--shade-blue: #358088;
+	--tint-blue: #7DC6CD;
+	--royal-blue: #002366;
+	--red-o: #DA3910;
+	--burgundy: #800020;
+	--yellow-strong: #FFEE00;
+	--gray: #E6E6E6;
+	--light-gray: #F0F0F0;
+	--white: #FFFFFF;
+}
+
+body {
+	margin: 0 auto;
+	font-family: 'Times New Roman', Arial;
+}
+
+/*1. entry-screen*/
+
+.pre-battle {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+.warm-up-container {
+/*	display: flex;
+	flex-direction: column;*/
+	height: 25vh;
+}
+
+/*2. healthbars*/
+
+.combatants-container {
+	display: flex;
+	justify-content: space-evenly;
+	height: 25vh;
+	background-color: navy;
+	color: white;
+}
+
+.combatant {
+	text-align: center;
+	width: 15rem;
+}
+
+.healthbar {
+	width: 80%;
+	height: 3rem;
+	margin: auto;
+	background-color: gray;
+	transition: 450ms;
+}
+
+/*3. pre-battle screen*/
+
+.pre-battle-screen {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 60vh;
+}
+
+.pre-battle-screen h1 {
+	font: 400 2.8rem Times New Roman;
+}
+
+/*4. battle*/
+
+.controls-container {
+	display: flex;
+	justify-content: space-evenly;
+	/*align-items: center;*/
+	/*height: 60vh;*/
+	padding-top: 1.8rem;
+}
+
+.team-container {
+	display: flex;
+	flex-direction: column;
+	/*align-items: center;*/
+	/*justify-content: space-around;*/
+}
+
+.user-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 18rem;
+	padding-top: 1.2rem;
+}
+
+.user-card__image {
+	background: url('images/bblame.jpg') left 75% top 50%/cover no-repeat;
+	height: 10rem;
+	width: 10rem;
+}
+
+.user-card__buttons {
+	padding: 0.6rem;
+}
+
+.healer-card {
+	display: flex;
+	flex-direction: column;
+	width: 18rem;
+	align-items: center;
+}
+
+.healer-card__image {
+	background: url('images/obluda.jpg') center/cover no-repeat;
+	height: 10rem;
+	width: 10rem;
+}
+
+.healer-card__buttons {
+	padding: 0.6rem;
+}
+
+.healbackground {
+	background-color: lime;
+}
+
+.monster-card {
+	/*align-self: top;*/
+	/*display: flex;*/
+	/*justify-content: center;*/
+	width: 18rem;
+}
+
+.monster-card__image {
+	margin: auto;
+	height: 12rem;
+	width: 12rem;
+	background-color: black;
+}
+
+.monster-card__image--shock {
+	background-color: red;
+}
+
+
+/*BEM*/
+
+.button {
+	padding: 0.4rem 1rem;
+	margin: 0.5rem;
+	font: 700 1rem Arial;
+}
+
+.user-card__buttons--attack, .user-card__buttons--evasive,
+.user-card__buttons--forfeit, .healer-card__buttons--heal {
+	padding: 0.3rem;
+	margin: 0.2rem;
+	font: 700 0.8rem Arial;
+	color: white;
+	border: 1px solid black;
+	border-radius: 3px;
+}
+
+.user-card__buttons--attack:hover, .user-card__buttons--evasive:hover,
+.user-card__buttons--forfeit:hover, .healer-card__buttons--heal:hover {
+	/*background-color: orange;*/
+}
+
+.user-card__buttons--attack {
+	background-color: red;
+}
+
+.user-card__buttons--evasive {
+	background-color: navy;
+}
+
+.user-card__buttons--forfeit {
+	background-color: gray;
+}
+
+.healer-card__buttons--heal {
+	background-color: lime;
+}
+
+
+
+
+/*ANIMATIONS*/
+
+/*entry-screen*/
+
+.flow-in {
+	animation: flow-in 1.2s ease-out;
+}
+
+@keyframes flow-in {
+	0% {
+		transform: translateY(-10rem);
+		opacity: 0;
+	}
+	100% {
+		transform: translateY(0rem);
+		opacity: 1;
+	}
+}
+
+.flow-out {
+	animation: flow-out 1.2s ease-in;
+}
+
+@keyframes flow-out {
+	0% {
+		transform: translateY(0rem) scale(1);
+		/*opacity: 1;*/
+	}
+	100% {
+		transform: translateY(-10rem) scale(0);
+		/*opacity: 0;*/
+	}
+}
+
+
+
+.warm-up-enter, .warm-up-leave-to {
+	opacity: 1;
+	transform: translateX(10rem);
+}
+
+.warm-up-enter-active, .warm-up-leave-active {
+	transition: all 1s ease;
+}
+
+.warm-up-enter-to, .warm-up-leave {
+	opacity: 1;
+	transform: translateX(0rem);
+}
+
+/*entry screen test*/
+
+.entry2-enter, .entry2-leave-to {
+	opacity: 0;
+	transform: translateY(-15rem);
+}
+
+.entry2-enter-active, .entry2-leave-active {
+	transition: all 1.5s ease;
+}
+
+.entry2-enter-to, .entry2-leave {
+	opacity: 1;
+	transform: translateY(0rem);
+}
+
+/*test*/
+
+.fade-enter-active, .fade-leave-active {
+	transition: opacity 1.5s;
+}
+
+.fade-enter, .fade-leave-to {
+	opacity: 0;
+}
+
+/*test*/
+
+/*.entry-leave-active {
+	animation: shocked .5s reverse;
+}*/
+
+
+/*recoil*/
+
+
+.recoil {
+	animation: recoil 0.6s ease-in;
+}
+
+@keyframes recoil {
+	0% {
+		transform: translateX(0px);
+	}
+	20% {
+		transform: translateX(-60px);
+	}
+	100% {
+		transform: translateX(0px);
+	}
+}
+
+/*evasive*/
+
+
+.evasive {
+	animation: evasive 1s ease-out;
+}
+
+@keyframes evasive {
+	0% {
+		transform: translateX(0px);
+	}
+	10% {
+		transform: translateX(15rem);
+	}
+	45% {
+		transform: translateX(15rem);
+	}
+	100% {
+		transform: translateX(0px);
+	}
+}
+
+/*heal*/
+
+
+.healing {
+	animation: healing 0.9s;
+}
+
+@keyframes healing {
+	0% {
+		transform: scale(1);
+	}
+	100% {
+		transform: translateY(-0.5rem) scale(1.1);
+	}
+}
+
+/*push*/
+
+
+.push {
+	animation: pushing 0.2s 3;
+}
+
+@keyframes pushing {
+	0% {
+		transform: translateX(0px);
+	}
+	33% {
+		transform: translateX(8px);
+	}
+	66% {
+		transform: translateX(-8px);
+	}
+	100% {
+		transform: translateX(0px);
+	}
+}

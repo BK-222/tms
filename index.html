@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Slayer</title>
+	<script src="../../vue.js"></script>
+	<link rel="stylesheet" href="tms.css">
+</head>
+<body>
+
+	<div id="app">
+		<section v-if="isEntryScreen" class="entry-screen">
+			<entry-screen @submitUserName="enterWarmUp($event)"></entry-screen>
+		</section>
+
+		<section v-if="isWarmUp">
+			<warm-up @ready="isWarmUp = !isWarmUp, isPreBattle = true"></warm-up>
+		</section>
+
+		<section v-if="!isEntryScreen" class="combatants-container">
+			<user-health-bar :health="health.user" :name="userName"></user-health-bar>
+			<mons-health-bar :health="health.monster"></mons-health-bar>
+		</section>
+		
+		<section v-if="!isGameRunning && isPreBattle">
+			<pre-battle :name="userName" @startIt="startGame($event)"></pre-battle>
+		</section>
+
+		<!-- <section class='centerAnime'>
+			<button @click="shock = !shock">Toggle shock</button>
+			<transition name="shockwave"><p v-if="shock">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique facilis quas ex sed. Corporis explicabo totam omnis soluta culpa, ducimus.</p></transition>
+		</section> -->
+
+		<!-- <section class='centerAnime'>
+			<button @click="isPushing = !isPushing">Toggle shock</button>
+			<p v-if="isPushing" class="push">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique facilis quas ex sed. Corporis explicabo totam omnis soluta culpa, ducimus.</p>
+			<p v-else>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique facilis quas ex sed. Corporis explicabo totam omnis soluta culpa, ducimus.</p>
+		</section> -->
+		
+		<section v-if="isGameRunning" class="controls-container">
+			<div class="team-container">
+				<user-card :health="health" :healing="isHealing" :check="checkWin"
+				@shock="push($event)" @forfeit="endGame($event)"></user-card>
+				<healer-card :health="health" @emitIt="heal($event)"></healer-card>
+			</div>
+			<!-- <user-card :health="health" :gaming="isGameRunning"></user-card> -->
+			<monster-card :shock="isPushing" :health="health"></monster-card>
+		</section>
+	</div>
+
+	
+	<script src="components/entry-screen.js"></script>
+	<script src="components/Warm-Up.js"></script>
+	<script src="components/Pre-Battle.js"></script>
+	<script src="components/healthbars/UserHealthBar.js"></script>
+	<script src="components/healthbars/MonsHealthBar.js"></script>
+	<script src="components/cards/UserCard.js"></script>
+	<script src="components/cards/HealerCard.js"></script>
+	<script src="components/cards/MonsCard.js"></script>
+
+	<script>
+		
+		new Vue({
+			el: '#app',			
+			data: function() {
+				return {
+					isEntryScreen: true,
+					isWarmUp: false,
+					isPreBattle: false,
+					isGameRunning: false,
+					userName: '',
+					health: {
+						user: 100,
+						monster: 100
+					},
+					turns: [],
+					isPushing: false,
+					isHealing: false
+				}
+			},
+			methods: {
+				enterWarmUp: function(name) {
+					this.isEntryScreen = false;
+					this.isWarmUp = true;
+					this.userName = name;
+				},
+				startGame: function(event) {
+					this.isGameRunning = true;
+					this.health.user = 100;
+					this.health.monster = 100;
+					this.turns = [];
+				},
+				checkWin: function() {
+					if (this.health.monster <= 0) {
+						if (confirm('Nicely done! Go again?')) {
+							this.startGame();
+						} else {
+							this.isGameRunning = false;
+						}
+						return true;
+					} else if (this.health.user <= 0) {
+						if (confirm('Ooops! Try again?')) {
+							this.startGame();
+						} else {
+							this.isGameRunning = false
+						}
+						return true;
+					}
+					return false;
+				},
+				endGame: function(event) {
+					if (confirm('Are you sure?')) {
+						this.isGameRunning = false;
+					}
+					return;
+				},
+				//using setTimeouts within methods show better results without animation lag,
+				//as opposing to watch methods that seem to be slower adjust.
+				push: function(event) {
+					this.isPushing = true;
+					let vm = this;
+					setTimeout(function() {
+						vm.isPushing = false;
+					}, 600);
+				},
+				heal: function(event) {
+					this.isHealing = true;
+					let vm = this;
+					setTimeout(function() {
+						vm.isHealing = false;
+					}, 900);
+				}
+			},
+			watch: {
+				// isPushing: function() {
+				// 	let vm = this;
+				// 	setTimeout(function() {
+				// 		vm.isPushing = false;
+				// 	}, 600);
+				// },
+				// isHealing: function() {
+				// 	let vm = this;
+				// 	setTimeout(function() {
+				// 		vm.isHealing = false;
+				// 	}, 900);
+				// }
+			},
+			components: {
+				'entryScreen': entryScreen,
+				'warmUp': warmUp,
+				'preBattle': preBattle,
+				'userHealthBar': userHealthBar,
+				'monsHealthBar': monsHealthBar,
+				'userCard': userCard,
+				'healerCard': healerCard,
+				'monsterCard': monsterCard
+			}
+		});
+
+	</script>
+
+
+</body>
+</html>
